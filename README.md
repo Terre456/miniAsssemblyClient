@@ -2,7 +2,7 @@
 
 ## Installation
 
-Pour installer la commande `miniassc`, exécutez le script suivant :
+Pour installer la commande `miniassc` ainsi que l'extension vscode associée au langage, exécutez le script suivant :
 
 ```bash
 bash install-miniassc.sh
