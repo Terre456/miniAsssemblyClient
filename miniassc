@@ -1,0 +1,107 @@
+#!/bin/bash
+function traduce(){
+    python3 main.py $1
+}
+
+
+case $1 in
+    -d|--description) 
+        echo "-----------------------------( DESCRIPTION MINIASS )-----------------------------
+MiniAss est un langage pseudo-assembleur créé pour simplifier l'utilisation du pseudo-assembleur du professeur Ledent (Cours CI2 UPC Grands-Moulins)
+Exécuter l'assembleur est possible a cette adresse : https://www.irif.fr/~ledent/teaching/ci2/
+
+-----------------------------------------
+
+Mots-clés:
+
+    move {adr} {val}: met la valeur val a l'adresse adr
+
+    add/sub/mul/div/mod {adr} {val1} {val2} : effectue l'operation respective entre val1 et val2 (dans cet ordre) et stocke le resultat a l'adresse adr.
+    
+    jump {li}: saute jusqu'a la ligne li.
+    
+    jump_eq/jump_neq/jump_g/jump_ge/jump_l/jump_le {val1} {val2} {li} : compare val1 et val2, si le resultat est true alors saute a la ligne li sinon ne fait rien.
+    
+    call {li} : stocke la ligne courante dans la stack et saute a la ligne li.
+    
+    ret : saute a la ligne en tete de la stack.
+    
+    malloc {adr} {val} : alloue val cases memoire dans le heap et stocke l'adresse de reference dans adr.
+    
+    label {nom}: crée un alias de numero de ligne utilisable partout ou un numero de ligne est a precisé, nom doit etre précédé d'un '$' en toute occasion.
+    
+    loop...end: crée un bloc de boucle, fonctionne toujours par paire, s'il n'y a pas de 'jump' vers en dehors de la boucle, crée une boucle infinie.
+    
+    push *{val} : ajoute toute les valeurs val en haut de la stack
+    
+    pop ~{val} : supprime les val valeurs en haut de la stack (argument optionel: dans ce cas equivalent à 'pop 1')
+    
+    halt : signifie la fin du programme (=exit en bash).
+    
+    print *{val} : affiche les valeurs val séparées par des espaces sur la sortie standard
+    
+    println *{val} : pareil que 'print' mais saute une ligne a la fin
+
+
+Balise spéciale:
+    
+    -break : designe la ligne du prochain mot-clé 'end', s'utilise partout ou un numero de ligne est necessaire. Très utile pour sortir d'un bloc loop...end.
+
+
+Registres :
+    
+    R0/R1/R2/R3/R4/R5/R6/R7: manipulables a l'envi, conventionnellement le registre R0 est utilisé pour stocker la valeur de retour d'une fonction
+    
+    SP : (Stack Pointer) designe en tout temps l'adresse memoire en haut de la stack
+    
+    PC : (Program Counter) désigne le numero de la ligne en train d'être executée
+
+
+Gestion Memoire:
+    
+    [adr] : designe la valeur dans la heap a l'adresse adr, l'operateur '+' est autorisé
+    
+        exemple (Création de tableau): 
+    
+            malloc R0 3
+            move R1 0
+            loop
+            jump_g R1 3 -break
+            mul R2 R1 4
+            move [R0 + R1] R2
+            add R1 R1 1
+            end
+            print "le tableau en R0 contient:" [R0] [R0+1] [R0+2] 
+            halt
+    
+            >>> le tableau en R0 contient: 0 4 8
+
+--------------------
+
+Des modifications peuvent être ajoutées ultérieurement
+"
+        exit 0;;
+    -h|--help)
+        echo "Usage: miniassc [-hdc] [path/to/file.ass]
+            Options:
+                -h | --help : displays this help
+                -d | --descriptor : display the language syntax and purpose (fr)
+                -c | --copy : copies the stout to the clipboard
+        "
+        exit 0;;
+    -c|--copy)
+        if [[ -f $2 ]]; then
+            traduce $2 | tee /dev/null >(xclip -selection c)
+            echo "Successfully copied to clipboard !"
+            exit 0
+        else echo "Error : Could not find '$2' in the current working directory"; exit 1
+        fi ;;
+    *) 
+    if [[ -f $1 ]]; then
+        traduce $1
+        exit 0
+    else 
+        echo "Error : Could not find '$1' in the current working directory"
+        exit 1
+    fi
+esac
