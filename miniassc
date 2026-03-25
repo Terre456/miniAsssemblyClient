@@ -96,6 +96,13 @@ Des modifications peuvent être ajoutées ultérieurement
             exit 0
         else echo "Error : Could not find '$2' in the current working directory"; exit 1
         fi ;;
+    update)
+        echo "installing latest version of the package..."
+        echo before
+        bash $HOME/.local/share/script_assets/install-miniassc.sh
+        echo after $?
+        exit 0
+    ;;
     *) 
     if [[ -f $1 ]]; then
         traduce $1
