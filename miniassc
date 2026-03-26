@@ -98,9 +98,7 @@ Des modifications peuvent être ajoutées ultérieurement
         fi ;;
     update)
         echo "installing latest version of the package..."
-        echo before
-        bash $HOME/.local/share/script_assets/install-miniassc.sh
-        echo after $?
+        bash $HOME/.local/share/script_assets/install-miniassc.sh 2> /dev/null
         exit 0
     ;;
     *) 
