@@ -210,7 +210,7 @@ def treatment():
                     line["args"][pos] = str(LABELS[arg])
                 else : raise SyntaxError(f"line {line['old_i']+1} in '{FILENAME}', Undefined label name '{arg}'")
             elif arg == "-break":
-                if line["new_i"] > END_LIST[-1]: raise SyntaxError(f"line {line['old_i']+1} in '{FILENAME}', cannot break: reached end of file")
+                if len(END_LIST) == 0 or line["new_i"] > END_LIST[-1]: raise SyntaxError(f"line {line['old_i']+1} in '{FILENAME}', cannot break: reached end of file")
                 #print("line : ", line["new_i"], " | ENDS : ", END_LIST)
                 line["args"][pos] = str(findNearestEnd(line["new_i"]))
         if line["keyword"] == "print" or line["keyword"] == "println":
