@@ -14,7 +14,7 @@ chmod +x miniassc
 cp miniassc $HOME/.local/bin
 if [[ ! -d "$HOME/.local/share/script_assets" ]];
 then mkdir $HOME/.local/share/script_assets; fi
-cp main.py $HOME/.local/share/script_assets
+cp main.py $HOME/.local/share/script_assets/miniassc_compiler.py
 cp $0 $HOME/.local/share/script_assets
 
 # uninstalling previous extension

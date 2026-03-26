@@ -1,6 +1,6 @@
 #!/bin/bash
 function traduce(){
-    python3 main.py $1
+    python3 $HOME/.local/share/script_assets/miniassc_compiler.py $1
 }
 
 
