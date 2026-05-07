@@ -7,8 +7,7 @@ case $PATH in
 *":$HOME/.local/bin:"*);;
 *) PATH=$HOME/.local/bin:$PATH 
 esac" >> $HOME/.bashrc
-cd
-. .bashrc
+
 fi
 chmod +x miniassc
 cp miniassc $HOME/.local/bin
@@ -27,4 +26,5 @@ done
 # installing vsc extension latest version
 file=$(curl -s https://api.github.com/repos/Terre456/MiniAssembly-vsc-extension/contents/ | jq -r '.[] | select(.name | contains(".vsix")).name'| sort -Vr | head -1)
 curl -L -O "https://raw.githubusercontent.com/Terre456/MiniAssembly-vsc-extension/master/$file"
+. ~/.bashrc
 code --install-extension $file
