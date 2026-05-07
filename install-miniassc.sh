@@ -1,5 +1,6 @@
 #! /bin/bash
 cd $PWD
+git pull
 if [[ ! -d "$HOME/.local/bin" ]]
 then mkdir $HOME/.local/bin
 echo "# add $HOME/.local/bin to PATH. added by install-miniassc.sh
