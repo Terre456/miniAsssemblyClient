@@ -97,9 +97,9 @@ def checkSyntaxByFlags(line: Line): # return whether a line should be skipped or
         if not isNumber(args[2]) : raise SyntaxError (f"line {i} in '{FILENAME}', '{line["keyword"]}' expects a Number Value for third parameter but {args[2]} was found instead")
     def checkPushArgs() -> None:
         if len(args) < 1: raise SyntaxError(f"line {i} in \"{FILENAME}\", '{line["keyword"]}' expects at least 1 arguments but None were given")
-        if not isNumber(args[0]) : raise SyntaxError (f"line {i} in '{FILENAME}', '{line["keyword"]}' expects a Number Value for first parameter but {args[0]} was found instead")
-        if not isNumber(args[1]) : raise SyntaxError (f"line {i} in '{FILENAME}', '{line["keyword"]}' expects a Number Value for second parameter but {args[1]} was found instead")
-        if not isNumber(args[2]) : raise SyntaxError (f"line {i} in '{FILENAME}', '{line["keyword"]}' expects a Number Value for third parameter but {args[2]} was found instead")
+        for arg in args:
+            if not isNumber(arg) : raise SyntaxError (f"line {i} in '{FILENAME}', '{line["keyword"]}' expects a Number Value for parameter but {args} was found instead")
+
     def checkJumpArgs() -> None:
         match keyword:
             case "call"|"jump":
@@ -188,6 +188,7 @@ def treatment():
                     LABELS[line["args"][0]] = new_i
                     counted = False
                 case "push" : 
+                    counted = False
                     for arg in line["args"]: # adding lines
                         FILE.append({"keyword": "push", "args": [arg], "old_i": old_i, "new_i": new_i})
                         new_i += 1
